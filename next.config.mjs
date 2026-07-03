@@ -1,12 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Static export -> works out of the box on Vercel & Netlify (and any static host)
-  output: "export",
-  trailingSlash: true,
-  images: {
-    // next/image optimization needs a server; disable it for static export.
-    unoptimized: true,
-  },
+  // Vercel mendeteksi dan men-deploy Next.js secara native —
+  // tidak perlu output: "export". Hapus konfigurasi ini agar
+  // Vercel bisa serve dengan benar.
 };
 
 export default nextConfig;
