@@ -1,29 +1,48 @@
 import type { Metadata } from "next";
-import { Fraunces, Plus_Jakarta_Sans, IBM_Plex_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import StickyWhatsApp from "@/components/StickyWhatsApp";
 import { siteConfig } from "@/lib/data";
 
-const fraunces = Fraunces({
-  subsets: ["latin"],
-  weight: ["500", "600", "700"],
-  style: ["normal", "italic"],
+// Font files di-bundle ke dalam project (public/fonts/) sehingga build
+// tidak memerlukan koneksi internet ke Google Fonts — bebas error di
+// Vercel, Netlify, maupun environment build manapun.
+
+const fraunces = localFont({
+  src: [
+    {
+      path: "../public/fonts/fraunces-latin-wght-normal.woff2",
+      style: "normal",
+      weight: "100 900",
+    },
+    {
+      path: "../public/fonts/fraunces-latin-wght-italic.woff2",
+      style: "italic",
+      weight: "100 900",
+    },
+  ],
   variable: "--font-fraunces",
   display: "swap",
 });
 
-const jakarta = Plus_Jakarta_Sans({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+const jakarta = localFont({
+  src: [
+    { path: "../public/fonts/plus-jakarta-sans-latin-400-normal.woff2", weight: "400", style: "normal" },
+    { path: "../public/fonts/plus-jakarta-sans-latin-500-normal.woff2", weight: "500", style: "normal" },
+    { path: "../public/fonts/plus-jakarta-sans-latin-600-normal.woff2", weight: "600", style: "normal" },
+    { path: "../public/fonts/plus-jakarta-sans-latin-700-normal.woff2", weight: "700", style: "normal" },
+  ],
   variable: "--font-jakarta",
   display: "swap",
 });
 
-const plexMono = IBM_Plex_Mono({
-  subsets: ["latin"],
-  weight: ["400", "500"],
+const plexMono = localFont({
+  src: [
+    { path: "../public/fonts/ibm-plex-mono-latin-400-normal.woff2", weight: "400", style: "normal" },
+    { path: "../public/fonts/ibm-plex-mono-latin-500-normal.woff2", weight: "500", style: "normal" },
+  ],
   variable: "--font-plex-mono",
   display: "swap",
 });
@@ -54,7 +73,6 @@ export const metadata: Metadata = {
       "Sewa alat pancing siap pakai di Kramat Jati, Jakarta Timur. Booking praktis lewat WhatsApp.",
     images: [
       {
-        // TODO(pemilik): ganti dengan foto toko/alat pancing asli (rasio 1200x630, terkompresi).
         url: "/og-image.png",
         width: 1200,
         height: 630,
@@ -107,7 +125,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="id" className={`${fraunces.variable} ${jakarta.variable} ${plexMono.variable}`}>
+    <html
+      lang="id"
+      className={`${fraunces.variable} ${jakarta.variable} ${plexMono.variable}`}
+    >
       <body className="font-body">
         <script
           type="application/ld+json"
